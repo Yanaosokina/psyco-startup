@@ -1,157 +1,147 @@
-'use client'
+"use client";
 
-import { CSSProperties, useState } from 'react'
+import { useState } from "react";
+import {
+  Box,
+  TextField,
+  Select,
+  MenuItem,
+  Button,
+  Typography,
+  InputLabel,
+  Autocomplete,
+  FormControl,
+} from "@mui/material";
+
+const options = [
+  { label: "Депрессия", value: "depression" },
+  { label: "БАР", value: "bipolar" },
+  { label: "Шизофрения", value: "schizophrenia" },
+  { label: "Тревожное расстройство", value: "anxiety" },
+];
 
 export default function Home() {
-  const [gender, setGender] = useState('')
-  const [age, setAge] = useState('')
-  const [diagnosis, setDiagnosis] = useState('')
-  const [somatic, setSomatic] = useState('')
-  const [medications, setMedications] = useState([''])
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [diagnosis, setDiagnosis] = useState("");
+  const [somatic, setSomatic] = useState("");
+  const [medications, setMedications] = useState<string[]>([""]);
 
   const addMedication = () => {
-    setMedications([...medications, ''])
-  }
+    setMedications((prev) => [...prev, ""]);
+  };
 
-  const updateMedication = (index: number, value: string) => {
-    const copy = [...medications]
-    copy[index] = value
-    setMedications(copy)
-  }
-
-  const handleSubmit = () => {
-    const data = {
-      gender,
-      age,
-      diagnosis,
-      somatic,
-      medications,
-    }
-
-    console.log(data)
-    alert('Данные отправлены. Здесь будет расчёт побочек.')
-  }
+  const updateMedication = (i: number, value: string) => {
+    const copy = [...medications];
+    copy[i] = value;
+    setMedications(copy);
+  };
 
   return (
-    <div style={styles.container}>
+    <Box
+      maxWidth={700}
+      mx="auto"
+      p={3}
+      display="flex"
+      flexDirection="column"
+      gap={3}
+    >
       {/* Header */}
-      <div style={styles.header}>
-        <img src="/logo.png" alt="logo" style={styles.logo} />
-        <h1>Проверка побочных эффектов</h1>
-      </div>
+      <Box display="flex" alignItems="center" gap={2}>
+        <img src="/logo.png" alt="logo" width={48} height={48} />
+        <Typography variant="h5" fontWeight={600}>
+          Проверка побочных эффектов
+        </Typography>
+      </Box>
 
       {/* Row 1 */}
-      <div style={styles.row}>
-        <select value={gender} onChange={e => setGender(e.target.value)} style={styles.input}>
-          <option value="">Пол</option>
-          <option value="female">Женский</option>
-          <option value="male">Мужской</option>
-        </select>
+      <Box display="flex" gap={2} flexWrap="wrap">
+        <FormControl fullWidth>
+          <InputLabel>Пол</InputLabel>
+          <Select
+            value={gender}
+            label="Пол"
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <MenuItem value="female">Женский</MenuItem>
+            <MenuItem value="male">Мужской</MenuItem>
+          </Select>
+        </FormControl>
 
-        <select value={age} onChange={e => setAge(e.target.value)} style={styles.input}>
-          <option value="">Возраст</option>
-          <option value="18-25">18–25</option>
-          <option value="26-40">26–40</option>
-          <option value="41-60">41–60</option>
-          <option value="60+">60+</option>
-        </select>
+        <FormControl fullWidth>
+          <InputLabel>Возраст</InputLabel>
+          <Select
+            value={age}
+            label="Возраст"
+            onChange={(e) => setAge(e.target.value)}
+          >
+            <MenuItem value="18-25">18–25</MenuItem>
+            <MenuItem value="26-40">26–40</MenuItem>
+            <MenuItem value="41-60">41–60</MenuItem>
+            <MenuItem value="60+">60+</MenuItem>
+          </Select>
+        </FormControl>
 
-        <select value={diagnosis} onChange={e => setDiagnosis(e.target.value)} style={styles.input}>
-          <option value="">Психиатрический диагноз</option>
-          <option value="depression">Депрессия</option>
-          <option value="bipolar">БАР</option>
-          <option value="schizophrenia">Шизофрения</option>
-          <option value="anxiety">Тревожное расстройство</option>
-        </select>
-      </div>
+        <FormControl fullWidth>
+          <Autocomplete
+            freeSolo
+            options={options}
+            getOptionLabel={(option) =>
+              typeof option === "string" ? option : option.label
+            }
+            value={diagnosis}
+            onChange={(_, newValue) => {
+              if (typeof newValue === "string") {
+                setDiagnosis(newValue);
+              } else if (newValue) {
+                setDiagnosis(newValue.label);
+              }
+            }}
+            onInputChange={(_, newInputValue) => {
+              setDiagnosis(newInputValue);
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Диагноз" fullWidth />
+            )}
+          />
+        </FormControl>
+      </Box>
 
       {/* Row 2 */}
-      <div style={styles.column}>
-        <label>Сопутствующие соматические патологии</label>
-        <input
+      <Box>
+        <Typography mb={1}>Сопутствующие соматические патологии</Typography>
+        <TextField
+          fullWidth
           value={somatic}
-          onChange={e => setSomatic(e.target.value)}
+          onChange={(e) => setSomatic(e.target.value)}
           placeholder="Например: гипертония, диабет"
-          style={styles.input}
         />
-      </div>
+      </Box>
 
       {/* Row 3 */}
-      <div style={styles.column}>
-        <label>Лекарственные препараты</label>
+      <Box>
+        <Typography mb={1}>Лекарственные препараты</Typography>
 
         {medications.map((med, i) => (
-          <input
+          <TextField
             key={i}
+            fullWidth
             value={med}
-            onChange={e => updateMedication(i, e.target.value)}
+            onChange={(e) => updateMedication(i, e.target.value)}
             placeholder="Введите препарат"
-            style={styles.input}
+            sx={{ mb: 1 }}
           />
         ))}
 
-        <button onClick={addMedication} style={styles.secondaryButton}>
+        <Button onClick={addMedication} variant="outlined">
           + Добавить ещё
-        </button>
-      </div>
+        </Button>
+      </Box>
 
       {/* Submit */}
-      <button onClick={handleSubmit} style={styles.primaryButton}>
+      <Button size="large" variant="contained">
         Оценить возможные побочные эффекты
-      </button>
-    </div>
-  )
-}
-
-const styles: Record<string, CSSProperties> = {
-  container: {
-    maxWidth: 700,
-    margin: '40px auto',
-    padding: 24,
-    fontFamily: 'sans-serif',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 24,
-  },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 16,
-  },
-  logo: {
-    width: 50,
-    height: 50,
-  },
-  row: {
-    display: 'flex',
-    gap: 12,
-  },
-  column: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 8,
-  },
-  input: {
-    padding: 10,
-    borderRadius: 8,
-    border: '1px solid #ccc',
-    width: '100%',
-  },
-  primaryButton: {
-    padding: 14,
-    background: '#4F46E5',
-    color: 'white',
-    border: 'none',
-    borderRadius: 10,
-    fontSize: 16,
-    cursor: 'pointer',
-  },
-  secondaryButton: {
-    padding: 10,
-    background: '#E5E7EB',
-    border: 'none',
-    borderRadius: 8,
-    cursor: 'pointer',
-    alignSelf: 'flex-start',
-  },
+      </Button>
+    </Box>
+  );
 }
