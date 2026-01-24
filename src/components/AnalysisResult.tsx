@@ -1,3 +1,4 @@
+import { Chip } from "@mui/material";
 import { InfoBlock } from "./InfoBlock";
 import { SideEffectsResponse } from "@/types/sideEffects";
 
@@ -10,7 +11,7 @@ export function AnalysisResult({ data }: Props) {
     <>
       <InfoBlock
         title={data.interactionLabel}
-        footer="Генерируется ИИ на основе базы РСЛ"
+        footer="*Генерируется ИИ на основе базы РСЛ"
       >
         <strong>Противопоказания</strong>
         <ul>
@@ -36,7 +37,7 @@ export function AnalysisResult({ data }: Props) {
 
       <InfoBlock
         title={data.commonEffectsLabel}
-        footer="Генерируется ИИ на основе базы SIDER"
+        footer="*Генерируется ИИ на основе базы SIDER"
       >
         <ul>
           {data.commonEffects.map((e, idx) => (

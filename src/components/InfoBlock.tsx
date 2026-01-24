@@ -9,8 +9,8 @@ type Props = {
 
 export function InfoBlock({ title, footer, children }: Props) {
   return (
-    <Box border="1px solid #49C2BB" borderRadius={2} p={2} mb={3}>
-      <Typography fontWeight={600} mb={1}>
+    <Box bgcolor="#e1fbfa" border="1px solid #49C2BB" borderRadius={5} p={2} m={4} >
+      <Typography fontWeight={600} mb={1} >
         {title}
       </Typography>
 

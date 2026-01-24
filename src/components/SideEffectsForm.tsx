@@ -83,7 +83,23 @@ export function SideEffectsForm() {
         </Box>
 
         <Box display="flex" gap={2} flexWrap="wrap">
-          <FormControl fullWidth>
+          <FormControl
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 5,
+                "& fieldset": {
+                  borderColor: "#49C2BB",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#49C2BB",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#49C2BB",
+                },
+              },
+            }}
+          >
             <InputLabel>Пол</InputLabel>
             <Select
               value={gender}
@@ -95,7 +111,23 @@ export function SideEffectsForm() {
             </Select>
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 5,
+                "& fieldset": {
+                  borderColor: "#49C2BB",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#49C2BB",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#49C2BB",
+                },
+              },
+            }}
+          >
             <InputLabel>Возраст</InputLabel>
             <Select
               value={age}
@@ -109,7 +141,23 @@ export function SideEffectsForm() {
             </Select>
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 5,
+                "& fieldset": {
+                  borderColor: "#49C2BB",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#49C2BB",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#49C2BB",
+                },
+              },
+            }}
+          >
             <Autocomplete<DiagnosisOption, false, false, true>
               freeSolo
               options={diagnosisOptions}
@@ -137,6 +185,20 @@ export function SideEffectsForm() {
             value={somatic}
             onChange={(e) => setSomatic(e.target.value)}
             placeholder="Например: гипертония, диабет"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 5,
+                "& fieldset": {
+                  borderColor: "#49C2BB",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#49C2BB",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#49C2BB",
+                },
+              },
+            }}
           />
         </Box>
 
@@ -150,11 +212,39 @@ export function SideEffectsForm() {
               value={med}
               onChange={(e) => updateMedication(i, e.target.value)}
               placeholder="Введите препарат"
-              sx={{ mb: 1 }}
+              sx={{
+                mb: 1,
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 5,
+                  "& fieldset": {
+                    borderColor: "#49C2BB",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#49C2BB",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#49C2BB",
+                  },
+                },
+              }}
             />
           ))}
 
-          <Button onClick={addMedication} variant="outlined">
+          <Button
+            onClick={addMedication}
+            variant="outlined"
+            size="small"
+            sx={{
+              borderRadius: 5,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#49C2BB",
+              "&:hover": {
+                borderColor: "#49C2BB",
+              },
+            }}
+          >
             + Добавить ещё
           </Button>
         </Box>
@@ -166,6 +256,7 @@ export function SideEffectsForm() {
           variant="contained"
           onClick={handleSubmit}
           disabled={loading}
+          style={{ borderRadius: 20, background: "#49C2BB" }}
         >
           {loading ? "Анализ..." : "Оценить возможные побочные эффекты"}
         </Button>
